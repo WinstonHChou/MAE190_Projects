@@ -10,8 +10,9 @@ function d = computeDiameter(Tm, Ta, Mm, Ma, Kf, Kfs, Sy, Se, Sut, n, criterion,
     %   Sy         - Yield Strngth (MPa or lb*in)
     %   Se         - Modified Endurance Limit (MPa or ksi)
     %   Sut        - Ultimate tensile strength (MPa or ksi)
-    %   n          - Desired Safety Factor (MPa or ksi)
+    %   n          - Desired Safety Factor
     %   criterion  - fatigue failure criterion
+    %   unit       - 'MPa' / 'ksi'
     %
     % Output:
     %   d          - Required diameter (mm or inches)
