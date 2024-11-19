@@ -1,19 +1,27 @@
-function [Kf,Kfs] = getFatigueStressConcentrationFactor(Kt, Kts, r, Sut)
+function [Kf,Kfs] = getFatigueStressConcentrationFactor(Kt, Kts, r, Sut, length_unit)
     % getFatigueStressConcentrationFactor - Computes the fatigue stress concentration factor (K_f)
     % based on a given stress concentration factor (K_t) and a characteristic dimension.
     %
     % Inputs:
-    %   Kt      - Geometric normal stress concentration factor (dimensionless)
-    %   Kts     - Geometric shear stress concentration factor (dimensionless)
-    %   r       - Notch radius (in)
-    %   Sut     - Ultimate tensile strength (ksi)
+    %   Kt          - Geometric normal stress concentration factor (dimensionless)
+    %   Kts         - Geometric shear stress concentration factor (dimensionless)
+    %   r           - Notch radius (in)
+    %   Sut         - Ultimate tensile strength (ksi)
+    %   length_unit - 'mm' / 'in'
     %
     % Output:
-    %   Kf      - Fatigue stress concentration factor (dimensionless)
+    %   Kf          - Fatigue stress concentration factor (dimensionless)
     
     % Check if inputs are positive
     if Kt <= 0 || Kts <= 0 || Sut <= 0
         error('All input values must be positive.');
+    end
+    
+    % Force convert to inches and ksi
+    switch length_unit
+        case 'mm'
+            r = r / 25.4;        % mm to inches
+            Sut = Sut / 6.89476; % MPa to ksi
     end
     
     % Compute notch sensitivities
