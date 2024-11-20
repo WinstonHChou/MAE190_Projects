@@ -1,24 +1,25 @@
-function d = computeDiameter(Tm, Ta, Mm, Ma, Kf, Kfs, Sy, Se, Sut, n, criterion, unit)
+function d = computeDiameter(Tm, Ta, Mm, Ma, Kf, Kfs, Sy, Se, Sut, n, criterion, stress_unit, length_unit)
     % computeDiameter - Computes the required diameter for a shaft
     % based on the selected fatigue criterion.
     %
     % Inputs:
-    %   Tm         - Mean Torque (Nm or lb*in)
-    %   Ta         - Alternating Torque  (Nm or lb*in)
-    %   Mm         - Mean Bending Moment (Nm or lb*in)
-    %   Ma         - Alternating Bending Moment (Nm or lb*in)
-    %   Sy         - Yield Strngth (MPa or lb*in)
-    %   Se         - Modified Endurance Limit (MPa or ksi)
-    %   Sut        - Ultimate tensile strength (MPa or ksi)
-    %   n          - Desired Safety Factor
-    %   criterion  - fatigue failure criterion
-    %   unit       - 'MPa' / 'ksi'
+    %   Tm          - Mean Torque (Nm or lb*in)
+    %   Ta          - Alternating Torque  (Nm or lb*in)
+    %   Mm          - Mean Bending Moment (Nm or lb*in)
+    %   Ma          - Alternating Bending Moment (Nm or lb*in)
+    %   Sy          - Yield Strngth (MPa or lb*in)
+    %   Se          - Modified Endurance Limit (MPa or ksi)
+    %   Sut         - Ultimate tensile strength (MPa or ksi)
+    %   n           - Desired Safety Factor
+    %   criterion   - fatigue failure criterion
+    %   stress_unit - 'MPa' / 'ksi'
+    %   length_unit - 'mm' / 'in'
     %
     % Output:
     %   d          - Required diameter (mm or inches)
 
     % Convert stresses into Pa or psi
-    switch unit
+    switch stress_unit
         case 'MPa'
             Sy = Sy * 10^6;
             Se = Se * 10^6;
@@ -41,5 +42,11 @@ function d = computeDiameter(Tm, Ta, Mm, Ma, Kf, Kfs, Sy, Se, Sut, n, criterion,
             d = ((16*n/pi) * (4*(Kf*Ma/Se)^2 + 3*(Kfs*Ta/Se)^2 + 4*(Kf*Mm/Sy)^2 + 3*(Kfs*Tm/Sy)^2)^(1/2)) ^ (1/3);
         case 'DE-Soderberg'
             d = ((16*n/pi) * ((1/Se)*(4*(Kf*Ma)^2 + 3*(Kfs*Ta)^2)^(1/2) + (1/Sy)*(4*(Kf*Mm)^2 + 3*(Kfs*Tm)^2)^(1/2))) ^ (1/3);
-    end 
+    end
+
+    % Convert meters to mm if applicable
+    switch length_unit
+        case 'mm'
+            d = d * 1000;
+    end
 end
