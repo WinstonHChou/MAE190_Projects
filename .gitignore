@@ -1,3 +1,6 @@
 # word doc
 */*.doc
 */*.docx
+
+# pdf
+*/*.pdf
