@@ -25,9 +25,9 @@ function Kb = getSizeMarinFactor(d, unit)
     elseif d > 2 && d <= 10
         Kb = 0.91 * d ^ (-0.157);
     elseif d > 10
-        error('The diameter is too thick');
+        error('The diameter of %f is too thick',d);
     else
-        error('The diameter is too thin');
+        error('The diameter of %f is too thin',d);
     end
     
     % Ensure K_size is positive
